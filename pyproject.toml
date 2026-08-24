@@ -1,0 +1,26 @@
+[project]
+name = "wedding-sim"
+version = "0.1.0"
+description = "Small, transparent simulations for wedding-day decisions"
+readme = "README.md"
+requires-python = ">=3.14,<3.15"
+dependencies = []
+
+[project.scripts]
+wedding-sim = "wedding_sim.__main__:main"
+
+[dependency-groups]
+notebook = [
+    "jupyterlab==4.5",
+    "matplotlib>=3.11",
+]
+
+[build-system]
+requires = ["setuptools==80"]
+build-backend = "setuptools.build_meta"
+
+[tool.uv]
+default-groups = ["notebook"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
