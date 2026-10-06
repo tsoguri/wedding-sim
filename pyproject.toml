@@ -24,3 +24,6 @@ default-groups = ["notebook"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+"wedding_sim.timeline" = ["data/*.csv"]

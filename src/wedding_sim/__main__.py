@@ -10,6 +10,7 @@ from wedding_sim.bus_departures import (
     optimize_behavioral_schedule,
     simulate_behavioral,
 )
+from wedding_sim.timeline import format_timeline_result, simulate_timeline
 
 
 def main() -> None:
@@ -23,6 +24,9 @@ def main() -> None:
     buses.add_argument("--bus-gap", type=int, help="Evaluate this Bus 2 gap in minutes.")
     buses.add_argument("--seed", type=int, default=42, help="Random seed for reproducible trials.")
     buses.add_argument("--optimize", action="store_true", help="Find the lowest-cost behavioral schedule.")
+    timeline = subcommands.add_parser("timeline", help="Model wedding-day schedule delay propagation.")
+    timeline.add_argument("--trials", type=int, default=10_000)
+    timeline.add_argument("--seed", type=int, default=42, help="Random seed for reproducible trials.")
     args = parser.parse_args()
     if args.simulation == "buses":
         constraints = BusDepartureConstraints(args.riders, args.capacity, 2, args.music_end)
@@ -32,3 +36,9 @@ def main() -> None:
             print(simulate_behavioral(constraints, BusSchedule(args.first_departure, args.bus_gap), seed=args.seed))
         else:
             parser.error("provide --optimize or both --first-departure and --bus-gap")
+    elif args.simulation == "timeline":
+        print(format_timeline_result(simulate_timeline(trials=args.trials, seed=args.seed)))
+
+
+if __name__ == "__main__":
+    main()
